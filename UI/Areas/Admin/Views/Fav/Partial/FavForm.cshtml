@@ -1,0 +1,42 @@
+﻿
+@model DTO.FavDTO
+
+<div class="box-body">
+    <div class="form-group">
+        <label>Title</label>
+        @Html.TextBoxFor(x => x.Title, new { @class = "form-control", @placeholder = "Title" })
+        @Html.ValidationMessageFor(x => x.Title)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.FavImage)<br/>
+        <input type="file" name="FavImage" accept="image/gif,image/jpeg,image/jpg,image/png" onchange="$('#FavImage')[0].src = window.URL.createObjectURL(this.files[0])" />
+        <br /><br />
+        @if (Model != null && Model.Fav != null)
+        {
+            <br />
+            <img src="~/Areas/Admin/Content/favimage/@Model.Fav" width="300" height="200" id="FavImage" />
+        }
+        else
+        {
+            <img src="~/Areas/Admin/Content/tempimage/placeholder.gif" width="300" height="200" id="FavImage" />
+        }
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.LogoImage)<br/>
+        <input type="file" name="LogoImage" accept="image/gif,image/jpeg,image/jpg,image/png" onchange="$('#LogoImage')[0].src = window.URL.createObjectURL(this.files[0])" />
+        <br /><br />
+        @if (Model != null && Model.Fav != null)
+        {
+            <br />
+            <img src="~/Areas/Admin/Content/favimage/@Model.Fav" width="300" height="200" id="LogoImage" />
+        }
+        else
+        {
+            <img src="~/Areas/Admin/Content/tempimage/placeholder.gif" width="300" height="200" id="LogoImage" />
+        }
+    </div>
+    <div class="card-footer">
+        <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+    <input type="number" name="HiddenFavID" value="@Model.ID" hidden />
+</div>

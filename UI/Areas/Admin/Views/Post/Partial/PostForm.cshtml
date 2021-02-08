@@ -1,0 +1,98 @@
+﻿
+@model DTO.PostDTO
+
+<div class="box-body">
+    <div class="form-group">
+        <label>Category</label>
+        @Html.DropDownListFor(x => x.CategoryID, Model.Categories, "Select Category", new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.CategoryID)
+    </div>
+    <div class="form-group">
+        <label>Title</label>
+        @Html.TextBoxFor(x => x.Title, new { @class = "form-control", @placeholder = "Title" })
+        @Html.ValidationMessageFor(x => x.Title)
+    </div>
+    <div class="form-group">
+        <label>Short Content</label>
+        @Html.TextBoxFor(x => x.ShortContent, new { @class = "form-control", @placeholder = "Short Content" })
+        @Html.ValidationMessageFor(x => x.ShortContent)
+    </div>
+    <div class="form-group">
+        <label>Post Content</label>
+        @Html.TextAreaFor(x => x.PostContent, new { @class = "ckeditor" })
+        @Html.ValidationMessageFor(x => x.PostContent)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.PostImage)<br />
+        <input type="file" name="PostImage" accept="image/gif,image/jpeg,image/jpg,image/png" multiple onchange="$('#PostImage')[0].src = window.URL.createObjectURL(this.files[0])" />
+        <br /><br />
+        <img @*src="~/Areas/Admin/Content/tempimage/placeholder.gif"*@ width="300" height="200" id="PostImage" />
+    </div>
+    <div class="form-group">
+        <label>Tags</label>
+        @Html.TextBoxFor(x => x.PostTag, new { @class = "form-control", @placeholder = "Please use ',' for separate tags" })
+        @Html.ValidationMessageFor(x => x.PostTag)
+    </div>
+    <div class="form-check">
+        <input type="checkbox" class="form-check-inline" name="Slider" checked="@Model.Slider" value="true">
+        <label class="form-check-label" for="Slider">Slider</label>
+    </div>
+    <div class="form-check">
+        <input type="checkbox" class="form-check-inline" name="Area1" checked="@Model.Area1" value="true">
+        <label class="form-check-label" for="Area1">Area 1</label>
+    </div>
+    <div class="form-check">
+        <input type="checkbox" class="form-check-inline" name="Area2" checked="@Model.Area2" value="true">
+        <label class="form-check-label" for="Area2">Area 2</label>
+    </div>
+    <div class="form-check">
+        <input type="checkbox" class="form-check-inline" name="Area3" checked="@Model.Area3" value="true">
+        <label class="form-check-label" for="Area3">Area 3</label>
+    </div>
+    <div class="form-check">
+        <input type="checkbox" class="form-check-inline" name="Notification" checked="@Model.Notification" value="true">
+        <label class="form-check-label" for="Notification">Notification</label>
+    </div>
+    <div class="form-group">
+        <label>Language</label>
+        @Html.TextBoxFor(x => x.LanguageName, new { @class = "form-control", @placeholder = "Language" })
+        @Html.ValidationMessageFor(x => x.LanguageName)
+    </div>
+    @if (Model.isUpdate)
+    {
+        <div class="card-body">
+            <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.PostImageList)
+                    {
+                        <tr id="a_@item.ID">
+                            <td><img src="~/Areas/Admin/Content/postimage/@item.ImagePath" width="60" height="40" /></td>
+                            <td align="center" valign="middle">
+                                <a href="#">
+                                    <img src="~/Areas/Admin/Content/icons/delete-16.ico" onclick="AskQuestion('/Admin/Post/DeletePostImage/', @item.ID)" />
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Image</th>
+                        <th>Delete</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div> <!-- /.card-body -->}
+    <div class="card-footer">
+        <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+    <input type="number" name="HiddenPostID" value="@Model.ID" hidden />
+    @Html.Partial("~/Areas/Admin/Views/Shared/ModalMessage.cshtml")
+</div>
+<script src="~/Areas/Admin/Content/JS/DeleteRecord.js"></script>
